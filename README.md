@@ -1,77 +1,69 @@
-# 🖼️ Mini Photo Editor
+# Mini Photo Editor
 
-**Course**: 20CYS212 – Multimedia Processing  
-**Team Members**:  
-- Aravindh P (CYS23011)  
-- Deepak SG (CYS23020)
+A lightweight, browser-based image editor that applies real-time filters and transformations using OpenCV.js, with undo/redo history and one-click export.
 
----
+## Overview
 
-## 📘 Project Overview
+Mini Photo Editor is a Next.js web application built as a course project for **20CYS212 – Multimedia Processing**. Users upload an image, apply filters and enhancements that run entirely in the browser, step backward and forward through their edit history, and download the result. All image processing happens client-side via OpenCV.js — no server-side computation is involved.
 
-**Mini Photo Editor** is a lightweight, browser-based image editing tool built as a course project for Multimedia Processing. It enables users to upload images, apply a range of real-time filters and enhancements, track edit history, and export the final image—all through an interactive and modern user interface.
+**Authors:** Aravindh P (CYS23011), Deepak SG (CYS23020)
 
----
+## Features
 
-## 🧩 Modules Implemented
+- Image upload for common formats (PNG, JPEG, BMP) using the browser FileReader API
+- Real-time filters and transformations powered by OpenCV.js:
+  - Grayscale
+  - Gaussian blur (low-pass)
+  - Canny edge detection (high-pass)
+  - Thresholding
+  - Brightness adjustment
+  - Rotation
+- Live preview rendered to an HTML5 `<canvas>`
+- Undo/redo with a thumbnail-based history viewer for jumping to any previous state
+- Export the edited image as PNG (client-side, via canvas + Base64)
 
-### 1. **User Interface (UI) Module**
-- Built using **ReactJS** with **TailwindCSS** (DaisyUI).
-- Includes upload button, filter controls, undo/redo, and save options.
-- Responsive and clean design for a smooth user experience.
+## Tech stack
 
-### 2. **File Management Module**
-- Supports image upload in formats like `.png`, `.jpeg`, and `.bmp`.
-- Uses FileReader API to load image into memory.
-- Handles image preview and reload.
+- **Next.js 15** (App Router) with React 19
+- **OpenCV.js** for image processing (loaded from `public/opencv.js`)
+- **Tailwind CSS 4** with **DaisyUI** for styling
+- **HTML5 Canvas** and the FileReader API
+- ESLint (`eslint-config-next`)
 
-### 3. **Image Processing Engine**
-- Core computations done using **OpenCV.js**.
-- Applies pixel-level transformations with convolution and matrix operations.
-- Modular design allows future extension of filters and operations.
+## Getting started
 
-### 4. **Filters & Effects Module**
-Includes multiple filters such as:
-- Grayscale  
-- Gaussian Blur (low-pass)  
-- Canny Edge Detection (high-pass)  
-- Thresholding  
-- Brightness Adjustment  
-- Rotation  
+Requires Node.js. From the project root:
 
-Each filter is applied on the fly and rendered instantly.
+```bash
+npm install       # install dependencies
+npm run dev       # start the dev server (http://localhost:3000)
+```
 
-### 5. **Image Preview Module**
-- Real-time display of the currently processed image via `<canvas>`.
-- Automatically updates after each applied transformation.
+Other scripts:
 
-### 6. **Export Module**
-- Enables downloading the edited image in `.png` format.
-- Uses Canvas API and Base64 conversion to allow client-side saving.
+```bash
+npm run build     # production build
+npm run start     # serve the production build
+npm run lint      # run ESLint
+```
 
-### 7. **Undo/Redo Module**
-- Maintains image history using stack logic.
-- Lets users move backward and forward between editing states.
-- Includes a thumbnail-based history viewer for direct state selection.
+## Project structure
 
----
-
-## 🧪 Technologies Used
-
-- **ReactJS**  
-- **OpenCV.js**  
-- **TailwindCSS (DaisyUI)**  
-- **HTML5 Canvas**  
-- **JavaScript (ES6+)**
-
----
-
-## 🎯 Key Learnings
-
-- Implementing modular architecture for real-time image processing.
-- Applying advanced filters using OpenCV.js.
-- Using React state management for undo/redo history.
-- Designing a responsive UI with TailwindCSS.
-- Understanding low-level concepts like kernels, edge detection, padding, and filtering.
-
----
+```
+Mini_Photo_Editor/
+├── public/
+│   └── opencv.js               # OpenCV.js runtime loaded by the editor
+├── src/
+│   ├── app/
+│   │   ├── layout.jsx          # root layout
+│   │   ├── page.jsx            # main page
+│   │   └── globals.css         # global styles (Tailwind)
+│   └── components/
+│       ├── PhotoEditor.jsx     # top-level editor, ties the modules together
+│       ├── ControlPanel.jsx    # filter/transform controls
+│       ├── ImageCanvas.jsx     # canvas preview + rendering
+│       └── HistoryViewer.jsx   # undo/redo thumbnail history
+├── next.config.mjs
+├── postcss.config.mjs
+└── package.json
+```
